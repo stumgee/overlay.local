@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Live Stream Overlay",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+  	"start": "node server.js"
+  },
   "author": "CyberWizard",
   "license": "ISC",
   "dependencies": {
