@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Live Stream Overlay</title>
+</head>
+<body>
+	<input id="player-1-name" type="text" value="">
+	<input id="player-1-score" type="text" value="0">
+	<input id="player-1-colour" type="text" value="">
+	<input id="player-2-name" type="text" value="">
+	<input id="player-2-score" type="text" value="0">
+	<input id="player-2-colour" type="text" value="">
+	<input id="frames" type="text" value="">
+	<button id="update-overlay" type="button">Update Match Details</button>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+    <script>
+        var socket = io();
+
+        $('#update-overlay').on('click', function() {
+        	var data = {
+        		'player1name': $('#player-1-name').val(),
+        		'player1score': $('#player-1-score').val(),
+        		'player1colour': $('#player-1-colour').val(),
+        		'player2name': $('#player-2-name').val(),
+        		'player2score': $('#player-2-score').val(),
+        		'player2colour': $('#player-2-colour').val(),
+        		'frames': $('#frames').val(),
+        	}
+
+        	socket.emit( 'updateMatchDetails', data );
+        });
+    </script>
+</body>
+</html>

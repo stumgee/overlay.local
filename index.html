@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Live Stream Overlay</title>
+	<style>
+		#stream-overlay {
+			height: 50px;
+			position: relative;
+			background: black;
+		}
+
+		#player-1-name {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 65%;
+			color: white;
+			line-height: 50px;
+			padding: 0 15px;
+			text-transform: uppercase;
+		}
+
+		#player-2-name {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			right: 0;
+			left: 65%;
+			color: white;
+			line-height: 50px;
+			padding: 0 15px;
+			text-transform: uppercase;
+			text-align: right;
+		}
+
+		#player-1-colour {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 35%;
+			right: 60%;
+		}
+
+		#player-1-colour.Y {
+			content: '';
+			display: block;
+			height: 32px;
+			width: 32px;
+			border-radius: 100%;
+			background: yellow;
+			margin: 9px auto;
+		}
+
+		#player-1-colour.R:before {
+			content: '';
+			display: block;
+			height: 32px;
+			width: 32px;
+			border-radius: 100%;
+			background: red;
+			margin: 9px auto;
+		}
+
+		#player-2-colour {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 60%;
+			right: 35%;
+		}
+
+		#player-2-colour.Y:before {
+			content: '';
+			display: block;
+			height: 32px;
+			width: 32px;
+			border-radius: 100%;
+			background: yellow;
+			margin: 9px auto;
+		}
+
+		#player-2-colour.R:before {
+			content: '';
+			display: block;
+			height: 32px;
+			width: 32px;
+			border-radius: 100%;
+			background: red;
+			margin: 9px auto;
+		}
+
+		#player-1-score {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 40%;
+			right: 45%;
+			color: white;
+			line-height: 50px;
+			text-transform: uppercase;
+			text-align: center;
+		}
+
+		#player-2-score {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			right: 40%;
+			left: 45%;
+			color: white;
+			line-height: 50px;
+			text-transform: uppercase;
+			text-align: center;
+		}
+
+		#frames {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			right: 45%;
+			left: 45%;
+			color: white;
+			line-height: 50px;
+			text-transform: uppercase;
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+	<div id="stream-overlay">
+		<span id="player-1-name"></span>
+		<span id="player-1-colour"></span>
+		<span id="player-1-score"></span>
+		<span id="frames"></span>
+		<span id="player-2-name"></span>
+		<span id="player-2-colour"></span>
+		<span id="player-2-score"></span>
+	</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+    <script>
+        var socket = io();
+
+        socket.on('clientUpdateMatchDetails', function (data) {
+        	console.log(data.player1name);
+		    $('#player-1-name').text(data.player1name);
+		    $('#player-2-name').text(data.player2name);
+
+		    $('#player-1-score').text(data.player1score);
+		    $('#player-2-score').text(data.player2score);
+
+		    $('#frames').text(data.frames);
+
+		    if ( data.player1colour === 'Y' ) {
+		    	$('#player-1-colour').removeClass('Y').removeClass('R').addClass('Y');
+		    } else if ( data.player1colour === 'R' ) {
+		    	$('#player-1-colour').removeClass('Y').removeClass('R').addClass('R');
+		    } else {
+		    	$('#player-1-colour').removeClass('Y').removeClass('R');
+		    }
+
+		    if ( data.player2colour === 'Y' ) {
+		    	$('#player-2-colour').removeClass('Y').removeClass('R').addClass('Y');
+		    } else if ( data.player2colour === 'R' ) {
+		    	$('#player-2-colour').removeClass('Y').removeClass('R').addClass('R');
+		    } else {
+		    	$('#player-2-colour').removeClass('Y').removeClass('R');
+		    }
+		});
+    </script>
+</body>
+</html>
